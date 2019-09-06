@@ -4,6 +4,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
@@ -38,6 +39,12 @@ export class DataStorageService {
         tap(recipes => {
           this.recipeService.setRecipes(recipes);
         })
-      )
+      );
   }
+  deleteAt(id: number) {
+    const url = `${'https://ng-course-recipe-project.firebaseio.com/recipes'}/${id}${'.json'}`;
+    return this.http.delete(url).subscribe();
+  }
+
+
 }
